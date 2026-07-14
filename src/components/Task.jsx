@@ -11,6 +11,7 @@ function Task({taskClass,description,created,input}){
      <button className="icon icon-edit"></button>
      <button className="icon icon-destroy"></button>
   </div>
+   <input type="text" className="edit" defaultValue="Editing task"/>
  </li>
  )
 }
