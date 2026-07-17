@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import "./App.css";
 import { useState } from "react";
 function App() {
-  
   const [tasks, setTasks] = useState([
     {
       id: 1,

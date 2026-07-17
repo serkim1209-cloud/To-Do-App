@@ -11,7 +11,7 @@ function Task({
   deleteTask,
   newValue,
 }) {
-   const [value, setValue] = useState("")
+  const [value, setValue] = useState("");
 
   return (
     <li className={taskClass}>
@@ -45,14 +45,13 @@ function Task({
         type="text"
         className="edit"
         value={value}
-        onChange={(e)=>{setValue(e.target.value)}}
-        onKeyDown={(e)=>{
-       if(e.key==="Enter")
-        if(value.trim()!=="") 
-       
-       newValue(id,value)
+        onChange={(e) => {
+          setValue(e.target.value);
         }}
-    ></input>
+        onKeyDown={(e) => {
+          if (e.key === "Enter") if (value.trim() !== "") newValue(id, value);
+        }}
+      ></input>
     </li>
   );
 }
