@@ -1,23 +1,16 @@
 import Task from "./Task";
-
-function TasklIst(){
-    return(
-        <ul className="todo-list">
+function TasklIst({ tasks }) {
+  return (
+    <ul className="todo-list">
+      {tasks.map((task) => (
         <Task
-        taskClass={"completed"}
-        description={"Completed task"}
-        created={"created 17 seconds ago"}
+        key={task.id}
+          taskClass={task.taskClass}
+          description={task.description}
+          created={task.created}
         />
-        <Task
-        taskClass={"editing"}
-        description={"Editing task"}
-        created={"created 5 minutes ago"}
-        />
-        <Task
-        description={"Active task"}
-        created={"created 5 minutes ago"}
-        />
-        </ul>
-    )
+      ))}
+    </ul>
+  );
 }
 export default TasklIst;
