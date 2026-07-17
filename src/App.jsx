@@ -24,6 +24,32 @@ function App() {
       created: "created 5 minutes ago",
     },
   ]);
+function toggleComleted(id){
+setTasks(
+tasks.map((task)=>{
+if(task.id===id){
+return {
+...task,
+completed: !task.completed
+}
+}
+return task
+})
+)
+}
+function toggleEditing(id){
+setTasks(
+tasks.map((task)=>{
+if(task.id===id){
+return{
+...task,
+editing:!task.editing
+}
+}
+return task
+})
+)
+}
 
   return (
     <section className="todoapp">
