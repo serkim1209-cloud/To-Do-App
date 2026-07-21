@@ -2,24 +2,27 @@ import { useState } from "react";
 
 function Task({
   id,
-  taskClass,
+  editing,
+  completed,
   description,
   created,
-  input,
   toggleCompleted,
   toggleEditing,
   deleteTask,
-  newValue,
+  editedText,
+  tasks,
 }) {
-  const [value, setValue] = useState("");
-
+  const [value, setValue] = useState(description);
+  let computedClass = "active";
+  if (completed) computedClass = "completed";
+  if (editing) computedClass = "editing";
   return (
-    <li className={taskClass}>
+    <li className={computedClass}>
       <div className="view">
         <input
           className="toggle"
           type="checkbox"
-          checked={taskClass === "completed"}
+          checked={completed}
           onChange={() => {
             toggleCompleted(id);
           }}
@@ -49,7 +52,10 @@ function Task({
           setValue(e.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") if (value.trim() !== "") newValue(id, value);
+          if (e.key === "Enter")
+            if (value.trim() !== "") {
+              editedText(id, value);
+            }
         }}
       ></input>
     </li>

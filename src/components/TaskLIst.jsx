@@ -5,26 +5,23 @@ function TasklIst({
   toggleCompleted,
   toggleEditing,
   deleteTask,
-  newValue,
+  editedText,
 }) {
   return (
     <ul className="todo-list">
       {tasks.map((task) => {
-        let currentClass = "active";
-        if (task.completed) currentClass = "completed";
-        if (task.editing) currentClass = "editing";
-
         return (
           <Task
             key={task.id}
             id={task.id}
-            taskClass={currentClass}
+            completed={task.completed}
+            editing={task.editing}
             description={task.description}
             created={task.created}
             toggleCompleted={toggleCompleted}
             toggleEditing={toggleEditing}
             deleteTask={deleteTask}
-            newValue={newValue}
+            editedText={editedText}
           />
         );
       })}

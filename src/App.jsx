@@ -14,7 +14,6 @@ function App() {
     },
     {
       id: 2,
-      editing: false,
       description: "Editing task",
       created: "created 5 minutes ago",
     },
@@ -53,7 +52,7 @@ function App() {
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
   }
-  function newValue(id, value) {
+  function editedText(id, value) {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
@@ -77,7 +76,7 @@ function App() {
           toggleCompleted={toggleCompleted}
           toggleEditing={toggleEditing}
           deleteTask={deleteTask}
-          newValue={newValue}
+          editedText={editedText}
         />
       </section>
       <Footer />
