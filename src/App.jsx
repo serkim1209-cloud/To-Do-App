@@ -36,19 +36,6 @@ function App() {
       }),
     );
   }
-  function toggleEditing(id) {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === id) {
-          return {
-            ...task,
-            editing: !task.editing,
-          };
-        }
-        return task;
-      }),
-    );
-  }
   function deleteTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
   }
@@ -74,7 +61,6 @@ function App() {
         <TaskLIst
           tasks={tasks}
           toggleCompleted={toggleCompleted}
-          toggleEditing={toggleEditing}
           deleteTask={deleteTask}
           editedText={editedText}
         />
