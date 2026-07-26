@@ -2,20 +2,19 @@ import { useState } from "react";
 
 function Task({
   id,
-  editing,
   completed,
   description,
   created,
   toggleCompleted,
-  toggleEditing,
   deleteTask,
   editedText,
   tasks,
 }) {
+  const [isEditing,setEditing]=useState(false);
   const [value, setValue] = useState(description);
   let computedClass = "active";
   if (completed) computedClass = "completed";
-  if (editing) computedClass = "editing";
+  if (isEditing) computedClass = "editing";
   return (
     <li className={computedClass}>
       <div className="view">
@@ -34,7 +33,7 @@ function Task({
         <button
           className="icon icon-edit"
           onClick={() => {
-            toggleEditing(id);
+            setEditing(!isEditing)
           }}
         ></button>
         <button
@@ -55,6 +54,7 @@ function Task({
           if (e.key === "Enter")
             if (value.trim() !== "") {
               editedText(id, value);
+              setEditing(false);
             }
         }}
       ></input>
