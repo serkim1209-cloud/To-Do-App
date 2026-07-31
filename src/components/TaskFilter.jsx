@@ -1,16 +1,54 @@
-function TaskFilter() {
+
+function TaskFilter({list,setList,tasks,setTasks,taskList}) {
+const All=()=>{
+  return(
+    <ul>
+      {
+        tasks.map((task)=>{
+          return <li key={task.id}>{task.title}</li>
+        })
+      }
+    </ul>
+  )
+}
+const Active=()=>{
+  return(
+    <ul>
+      {
+        tasks.filter((task)=>!task.completed).map((task)=>
+        {return <li key={task.id}>{task.title}</li>}
+        )
+      }
+    </ul>
+  )
+}
+const Completed =()=>{
+  return(
+    <ul>
+      {
+        tasks.filter((task)=>task.completed).map((task)=>{
+          return <li key={task.id}>{task.title}</li>
+        })
+      }
+    </ul>
+  )
+}
   return (
     <ul className="filters">
       <li>
-        <button className="selected">All</button>
+        {list==="All"&&<All/>}
+        <button className="selected" onClick={()=>setTasks("All")}>All</button>
       </li>
       <li>
-        <button>Active</button>
+        {list==="Active"&&<Active/>}
+        <button onClick={()=>setList("Active")}>Active</button>
       </li>
       <li>
-        <button>Completed</button>
+        {list==="Completed"&&<Completed/>}
+        <button onClick={()=>setList("Completed")}>Completed</button>
       </li>
     </ul>
+    
   );
 }
 export default TaskFilter;

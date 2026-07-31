@@ -10,7 +10,7 @@ function Task({
   editedText,
   tasks,
 }) {
-  const [isEditing,setEditing]=useState(false);
+  const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(description);
   let computedClass = "active";
   if (completed) computedClass = "completed";
@@ -33,7 +33,7 @@ function Task({
         <button
           className="icon icon-edit"
           onClick={() => {
-            setEditing(!isEditing)
+            setEditing(!isEditing);
           }}
         ></button>
         <button
