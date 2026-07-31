@@ -1221,10 +1221,13 @@ function Footer() {
   ];
   const [tasks, setTasks] = useState(TasksLIst);
   const [list, setList] = useState("All");
+  const count = tasks.filter((task)=> !task.completed).length;
+
+  
 
   return (
     <footer className="footer">
-      <span className="todo-count">1 items left</span>
+      <span className="todo-count">{count} items left</span>
       <TaskFilter
         list={list}
         setList={setList}

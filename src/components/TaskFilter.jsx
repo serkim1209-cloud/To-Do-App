@@ -34,7 +34,7 @@ function TaskFilter({ list, setList, tasks, setTasks, taskList }) {
     <ul className="filters">
       <li>
         {list === "All" && <All />}
-        <button className="selected" onClick={() => setTasks("All")}>
+        <button className="selected" onClick={() => setList("All")}>
           All
         </button>
       </li>
