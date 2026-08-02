@@ -1,50 +1,19 @@
-function TaskFilter({ list, setList, tasks, setTasks, taskList }) {
-  const All = () => {
-    return (
-      <ul>
-        {tasks.map((task) => {
-          return <li key={task.id}>{task.title}</li>;
-        })}
-      </ul>
-    );
-  };
-  const Active = () => {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => !task.completed)
-          .map((task) => {
-            return <li key={task.id}>{task.title}</li>;
-          })}
-      </ul>
-    );
-  };
-  const Completed = () => {
-    return (
-      <ul>
-        {tasks
-          .filter((task) => task.completed)
-          .map((task) => {
-            return <li key={task.id}>{task.title}</li>;
-          })}
-      </ul>
-    );
-  };
+import { useState } from "react";
+import App from "../App";
+
+function TaskFilter({ buttonActive, buttonCompleted, buttonAll, tasks }) {
   return (
     <ul className="filters">
       <li>
-        {list === "All" && <All />}
-        <button className="selected" onClick={() => setList("All")}>
+        <button className="selected" onClick={buttonAll}>
           All
         </button>
       </li>
       <li>
-        {list === "Active" && <Active />}
-        <button onClick={() => setList("Active")}>Active</button>
+        <button onClick={buttonActive}>Active</button>
       </li>
       <li>
-        {list === "Completed" && <Completed />}
-        <button onClick={() => setList("Completed")}>Completed</button>
+        <button onClick={buttonCompleted}>Completed</button>
       </li>
     </ul>
   );
