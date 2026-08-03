@@ -1,19 +1,31 @@
-import { useState } from "react";
 import App from "../App";
 
-function TaskFilter({ buttonActive, buttonCompleted, buttonAll, tasks }) {
+function TaskFilter({ filter, setFilter }) {
   return (
     <ul className="filters">
       <li>
-        <button className="selected" onClick={buttonAll}>
+        <button
+          className={filter === "All" && "selected"}
+          onClick={() => setFilter("All")}
+        >
           All
         </button>
       </li>
       <li>
-        <button onClick={buttonActive}>Active</button>
+        <button
+          className={filter === "Active" && "selected"}
+          onClick={() => setFilter("Active")}
+        >
+          Active
+        </button>
       </li>
       <li>
-        <button onClick={buttonCompleted}>Completed</button>
+        <button
+          className={filter === "completed" && "selected"}
+          onClick={() => setFilter("completed")}
+        >
+          Completed
+        </button>
       </li>
     </ul>
   );

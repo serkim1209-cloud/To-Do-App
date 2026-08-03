@@ -1,23 +1,11 @@
 import TaskFilter from "./TaskFilter";
-import App from "../App";
-function Footer({
-  buttonActive,
-  buttonCompleted,
-  buttonAll,
-  buttonClearCompleted,
-  Count,
-  tasks,
-}) {
+
+function Footer({ Count, filter, setFilter, clearCompleted }) {
   return (
     <footer className="footer">
       <span className="todo-count">{Count}items left</span>
-      <TaskFilter
-        tasks={tasks}
-        buttonAll={buttonAll}
-        buttonCompleted={buttonCompleted}
-        buttonActive={buttonActive}
-      />
-      <button className="clear-completed" onClick={buttonClearCompleted}>
+      <TaskFilter filter={filter} setFilter={setFilter} />
+      <button className="clear-completed" onClick={clearCompleted}>
         Clear completed
       </button>
     </footer>
