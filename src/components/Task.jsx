@@ -14,7 +14,10 @@ function Task({
   const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(description);
   const [timeAgo, setTimeAgo] = useState("");
-
+  const [spanText, setSpanText] = useState("Created");
+  const editOnclick = () => {
+    setSpanText("Edited");
+  };
   useEffect(() => {
     if (isEditing) {
       inputClick.current.focus();
@@ -48,7 +51,9 @@ function Task({
         />
         <label>
           <span className="description">{description}</span>
-          <span className="created">created {timeAgo}</span>
+          <span className="created">
+            {spanText} {timeAgo}
+          </span>
         </label>
         <button
           className="icon icon-edit"
@@ -79,6 +84,7 @@ function Task({
           ) {
             editedText(id, value);
             setEditing(false);
+            editOnclick();
           } else if (e.key === "Escape" || e.key === "Enter") {
             setValue(description);
             setEditing(false);
