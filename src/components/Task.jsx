@@ -1,5 +1,6 @@
-import { useState } from "react";
-
+import { useState, useRef, useEffect } from "react";
+import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import PropTypes from "prop-types";
 function Task({
   id,
   completed,
@@ -8,13 +9,32 @@ function Task({
   toggleCompleted,
   deleteTask,
   editedText,
-  tasks,
 }) {
+  const inputClick = useRef(null);
   const [isEditing, setEditing] = useState(false);
   const [value, setValue] = useState(description);
+  const [timeAgo, setTimeAgo] = useState("");
+
+  useEffect(() => {
+    if (isEditing) {
+      inputClick.current.focus();
+    }
+  }, [isEditing]);
+  useEffect(() => {
+    if (!created) return;
+    const taskTime = () => {
+      setTimeAgo(formatDistanceToNowStrict(created, { addSuffix: true }));
+    };
+
+    taskTime();
+
+    const intervalTime = setInterval(taskTime, 1000);
+    return () => clearInterval(intervalTime);
+  }, [created]);
   let computedClass = "active";
   if (completed) computedClass = "completed";
   if (isEditing) computedClass = "editing";
+
   return (
     <li className={computedClass}>
       <div className="view">
@@ -28,7 +48,7 @@ function Task({
         />
         <label>
           <span className="description">{description}</span>
-          <span className="created">{created}</span>
+          <span className="created">created {timeAgo}</span>
         </label>
         <button
           className="icon icon-edit"
@@ -44,6 +64,7 @@ function Task({
         ></button>
       </div>
       <input
+        ref={inputClick}
         type="text"
         className="edit"
         value={value}
@@ -51,14 +72,38 @@ function Task({
           setValue(e.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter")
-            if (value.trim() !== "") {
-              editedText(id, value);
-              setEditing(false);
-            }
+          if (
+            e.key === "Enter" &&
+            value.trim() !== "" &&
+            value !== description
+          ) {
+            editedText(id, value);
+            setEditing(false);
+          } else if (e.key === "Escape" || e.key === "Enter") {
+            setValue(description);
+            setEditing(false);
+          }
         }}
       ></input>
     </li>
   );
 }
+Task.defaultProps = {
+  id: "",
+  completed: false,
+  description: "",
+  created: null,
+  toggleCompleted: () => {},
+  deleteTask: () => {},
+  editedText: () => {},
+};
+Task.propTypes = {
+  id: PropTypes.string,
+  completed: PropTypes.bool,
+  description: PropTypes.string,
+  created: PropTypes.string,
+  toggleCompleted: PropTypes.func,
+  deleteTask: PropTypes.func,
+  editedText: PropTypes.func,
+};
 export default Task;

@@ -1,5 +1,5 @@
 import Task from "./Task";
-
+import PropTypes from "prop-types";
 function TasklIst({
   tasks,
   toggleCompleted,
@@ -28,5 +28,18 @@ function TasklIst({
     </ul>
   );
 }
-
+TasklIst.defaultProps = {
+  tasks: [],
+  toggleCompleted: () => {},
+  toggleEditing: () => {},
+  deleteTask: () => {},
+  editedText: () => {},
+};
+TasklIst.propTypes = {
+  tasks: PropTypes.array,
+  toggleCompleted: PropTypes.func,
+  toggleEditing: PropTypes.func,
+  deleteTask: PropTypes.func,
+  editedText: PropTypes.func,
+};
 export default TasklIst;

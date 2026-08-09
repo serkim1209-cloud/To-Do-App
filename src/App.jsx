@@ -3,29 +3,36 @@ import TaskLIst from "./components/TaskLIst";
 import Task from "./components/Task";
 import Footer from "./components/Footer";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("All");
+  const inputRef = useRef(null);
+  const inputClick = (e) => {
+    if (e.key === "Enter") inputRef.current.focus();
+    else if (e.key === "Escape") inputRef.current.blur();
+  };
 
-  useEffect(() => {
-    async function getTasks() {
-      try {
-        const tasks = await fetch("https://jsonplaceholder.typicode.com/todos");
-        const All = await tasks.json();
-        const taskList = All.map((tasks) => ({
-          id: tasks.id,
-          description: tasks.title,
-          completed: tasks.completed,
-          created: "",
-        }));
-        setTasks(taskList);
-      } catch (error) {
-        console.log("error");
-      }
+  async function getTasks() {
+    try {
+      const tasks = await fetch("https://jsonplaceholder.typicode.com/todos");
+      const All = await tasks.json();
+      const taskList = All.map((tasks) => ({
+        id: tasks.id,
+        description: tasks.title,
+        completed: tasks.completed,
+        created: Date.now(),
+      }));
+      setTasks(taskList);
+    } catch (error) {
+      console.log("error");
     }
+  }
+  useEffect(() => {
     getTasks();
   }, []);
-  const [filter, setFilter] = useState("All");
+
   function visibleTasks() {
     if (filter === "Active") {
       return tasks.filter((task) => !task.completed);
@@ -47,8 +54,9 @@ function App() {
       id: Date.now(),
       description: text,
       completed: false,
+      created: Date.now(),
     };
-    setTasks([...tasks, newTask]);
+    setTasks([newTask, ...tasks]);
   }
 
   function toggleCompleted(id) {
@@ -71,7 +79,7 @@ function App() {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, description: value, editing: false };
+          return { ...task, description: value, editing: false,created:Date.now()};
         } else {
           return task;
         }
@@ -83,7 +91,11 @@ function App() {
     <section className="todoapp">
       <header className="header">
         <h1>todos</h1>
-        <NewTaskForm addTaskForm={addTaskForm} />
+        <NewTaskForm
+          addTaskForm={addTaskForm}
+          inputRef={inputRef}
+          inputClick={inputClick}
+        />
       </header>
       <section className="main">
         <TaskLIst
